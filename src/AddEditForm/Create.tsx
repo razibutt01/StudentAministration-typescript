@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import React from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import type { Student } from "./App";
+import type { Student } from "../App";
 interface Createstudent {
   name: string;
   sex: string;

@@ -1,10 +1,10 @@
 import "./App.css";
-import useFetch from "./useFetch";
+import useFetch from "./CustomHook/useFetch";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Body from "./Body";
+import Body from "./components/Body";
 
 import React from "react";
-import Create from "./Create";
+import Create from "./AddEditForm/Create";
 
 export interface Student {
   name: string;

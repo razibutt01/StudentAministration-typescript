@@ -1,8 +1,8 @@
-import Side from "./Side";
+import Side from "./SideBar";
 import Tables from "./Tables";
-import Top from "./Top";
+import Top from "./TopBar";
 
-import useFetch from "./useFetch";
+import useFetch from "../CustomHook/useFetch";
 import React from "react";
 interface Student {
   name: string;
