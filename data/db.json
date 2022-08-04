@@ -1,0 +1,119 @@
+{
+  "Students": [
+    {
+      "name": "Fasih ul Hassan butt",
+      "Place_of_Birth": "Pakistani",
+      "Date_of_Birth": "2005-05-06",
+      "sex": "Male",
+      "groups": [
+        "Maths",
+        "Chemistry",
+        "Computer"
+      ],
+      "id": 2
+    },
+    {
+      "name": "Waleed butt",
+      "id": 3,
+      "sex": "Male",
+      "Date_of_Birth": "2022-07-18",
+      "Place_of_Birth": "sfdasd",
+      "groups": [
+        "Physics"
+      ]
+    },
+    {
+      "name": "dsdfds",
+      "sex": "Female",
+      "Date_of_Birth": "2022-07-11",
+      "Place_of_Birth": "dfdsf",
+      "groups": [
+        "Chemistry",
+        "Computer"
+      ],
+      "id": 4
+    },
+    {
+      "name": "john ",
+      "id": 5,
+      "sex": "Male",
+      "Date_of_Birth": "2022-07-20",
+      "Place_of_Birth": "USA",
+      "groups": [
+        "Chemistry",
+        "Maths",
+        "Biology"
+      ]
+    },
+    {
+      "name": "Sabahat butt",
+      "sex": "Male",
+      "Date_of_Birth": "2022-07-23",
+      "Place_of_Birth": "South Africa",
+      "groups": [
+        "Computer",
+        "Physics"
+      ],
+      "id": 6
+    },
+    {
+      "name": "ghgjghj",
+      "sex": "Female",
+      "Date_of_Birth": "2022-07-08",
+      "Place_of_Birth": "hgjghj",
+      "groups": [
+        "Maths",
+        "Chemistry",
+        "Physics"
+      ],
+      "id": 7
+    },
+    {
+      "name": "ghjghjghjhgj",
+      "sex": "Male",
+      "Date_of_Birth": "2022-07-06",
+      "Place_of_Birth": "hgjhgjghjhgjgh",
+      "groups": [
+        "Chemistry",
+        "Maths"
+      ],
+      "id": 8
+    },
+    {
+      "name": "wrwerery",
+      "sex": "Male",
+      "Date_of_Birth": "2022-07-04",
+      "Place_of_Birth": "ewrgfhgfh",
+      "groups": [
+        "Chemistry",
+        "Maths",
+        "Physics"
+      ],
+      "id": 9
+    },
+    {
+      "name": "werwererrrtyr",
+      "sex": "Male",
+      "Date_of_Birth": "2022-07-09",
+      "Place_of_Birth": "erwerewrewrewr",
+      "groups": [
+        "Maths",
+        "Chemistry",
+        "Physics"
+      ],
+      "id": 10
+    },
+    {
+      "name": "abcd",
+      "Place_of_Birth": "Pakistan",
+      "Date_of_Birth": "2022-07-12",
+      "sex": "Male",
+      "groups": [
+        "Chemistry",
+        "Maths",
+        "Physics"
+      ],
+      "id": 12
+    }
+  ]
+}
