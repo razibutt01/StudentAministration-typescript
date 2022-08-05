@@ -8,6 +8,11 @@
 
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
+* {
+  font-family: 'Quicksand', sans-serif;
+}
 
 /* .App-logo {
   height: 40vmin;
@@ -44,12 +49,51 @@
   }
 } */
 
-* {
+.App {
   max-width: 900px;
   margin: 10px auto;
 
 
+
 }
+
+body>div.MuiDialog-root.MuiModal-root.css-153eyq5-MuiModal-root-MuiDialog-root>div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container>div>div>div>form>div:nth-child(4)>div:nth-child(2)>div {
+  display: flex;
+  flex-direction: row;
+  margin: 0 40px;
+
+}
+
+body>div.MuiDialog-root.MuiModal-root.css-153eyq5-MuiModal-root-MuiDialog-root>div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container>div>div>div>form>div:nth-child(4)>div:nth-child(3)>div.fields>label {
+  margin: 3px 50px;
+}
+
+body>div:nth-child(4)>div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container>div>div>div>form>div:nth-child(4)>div:nth-child(3)>div.fields>label {
+  margin: 3px 50px;
+
+}
+
+body>div.MuiDialog-root.MuiModal-root.css-153eyq5-MuiModal-root-MuiDialog-root>div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container>div>div>div>form>button {
+
+  padding: 0;
+}
+
+body>div.MuiDialog-root.MuiModal-root.css-153eyq5-MuiModal-root-MuiDialog-root>div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container>div>div>div>form>button:nth-child(5)>p {
+  padding: 0;
+  margin: 10px;
+}
+
+body>div.MuiDialog-root.MuiModal-root.css-153eyq5-MuiModal-root-MuiDialog-root>div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container>div>div>div>form>button:nth-child(6) {
+  padding: 10px;
+  margin-left: 110px;
+}
+
+#root>div>div>div.Body>div.top>div>div.Students>button {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+
 
 .Top {
   display: flex;
@@ -58,7 +102,8 @@
   justify-items: center;
   align-items: center;
   margin: 0;
-  padding: 0;
+  margin-top: 20px;
+
   box-sizing: border-box;
   flex-wrap: wrap;
   /* border: 1px solid lightgray; */
@@ -126,6 +171,7 @@ th {
   width: 100%;
   box-sizing: border-box;
   margin: 0;
+  margin-top: 70px;
 }
 
 .side {
@@ -154,6 +200,11 @@ th {
   color: red;
   font-size: 13px;
   margin: 5px;
+  text-align: center;
+}
+
+body>div.MuiDialog-root.MuiModal-root.css-153eyq5-MuiModal-root-MuiDialog-root>div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container>div>div>div>form>div:nth-child(4)>div:nth-child(2)>div.invalid-feedback {
+  margin-left: 60px;
 }
 
 #root>div>div>div>form>div:nth-child(4)>div:nth-child(2) {
@@ -524,4 +575,17 @@ span {
   table {
     min-width: 400px;
   }
+}
+
+form {
+  margin: 20px auto;
+}
+
+body>div.MuiDialog-root.MuiModal-root.css-153eyq5-MuiModal-root-MuiDialog-root>div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container>div>div>div {
+  border: 0;
+  margin: 0;
+}
+
+body>div.MuiDialog-root.MuiModal-root.css-153eyq5-MuiModal-root-MuiDialog-root>div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container>div>div>div>form>button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeSmall.MuiButton-containedSizeSmall.css-1fm2mmt-MuiButtonBase-root-MuiButton-root {
+  padding: 10px;
 }

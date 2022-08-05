@@ -10,7 +10,7 @@ import {
   Table,
 } from "@mui/material";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import { Link } from "react-router-dom";
+
 interface tableStudent {
   name: string;
   sex: string;
@@ -22,8 +22,15 @@ interface tableStudent {
 type Tableprops = {
   tablestu: tableStudent[];
   setTablestu(e: tableStudent[]): void;
+  handleClickOpens: () => void;
+  getId: (id: number) => void;
 };
-const Tables: React.FC<Tableprops> = ({ tablestu, setTablestu }) => {
+const Tables: React.FC<Tableprops> = ({
+  tablestu,
+  handleClickOpens,
+  setTablestu,
+  getId,
+}) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -51,6 +58,10 @@ const Tables: React.FC<Tableprops> = ({ tablestu, setTablestu }) => {
       update();
     });
   };
+  const handleStudent = (id: number) => {
+    handleClickOpens();
+    getId(id);
+  };
 
   return (
     <div className="Table">
@@ -72,15 +83,11 @@ const Tables: React.FC<Tableprops> = ({ tablestu, setTablestu }) => {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((student) => (
                     <TableRow key={student.id}>
-                      <TableCell>
-                        <Link
-                          to={`/edit/${student.id}`}
-                          style={{
-                            textDecorationLine: "none",
-                          }}
-                        >
-                          {student.name}
-                        </Link>
+                      <TableCell
+                        onClick={() => handleStudent(student.id)}
+                        sx={{ color: "blue", cursor: "pointer" }}
+                      >
+                        {student.name}
                       </TableCell>
 
                       <TableCell>{student.sex}</TableCell>

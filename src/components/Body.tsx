@@ -12,8 +12,12 @@ interface Student {
   groups: string[];
   id: number;
 }
-
-const Body = () => {
+type Bodytype = {
+  handleClickOpens: () => void;
+  getId: (id: number) => void;
+  handleID: () => void;
+};
+const Body: React.FC<Bodytype> = ({ handleClickOpens, getId, handleID }) => {
   const { data, isPending, error } = useFetch("http://localhost:5000/Students");
   const [students, setStudents] = React.useState<Student[]>([]);
   const [searchterm, setTerm] = React.useState("");
@@ -74,6 +78,8 @@ const Body = () => {
             topstudents={students}
             term={searchterm}
             searchkeyword={searchHandler}
+            handleClickOpen={handleClickOpens}
+            handleID={handleID}
           />
         )}
       </div>
@@ -97,6 +103,8 @@ const Body = () => {
                   : searchResults
               }
               setTablestu={setStudents}
+              getId={getId}
+              handleClickOpens={handleClickOpens}
             />
           )}
         </div>

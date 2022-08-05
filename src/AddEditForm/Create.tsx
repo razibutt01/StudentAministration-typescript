@@ -1,10 +1,11 @@
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useHistory, useParams } from "react-router-dom";
+
 import React from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import type { Student } from "../App";
+
 interface Createstudent {
   name: string;
   sex: string;
@@ -16,20 +17,15 @@ interface Createstudent {
 type Createprops = {
   createstu: Createstudent[];
   setCreatestu: React.Dispatch<React.SetStateAction<Student[]>>;
-};
-type fieldtype = {
-  field: string;
+  id: number;
 };
 
-const Create: React.FC<Createprops> = ({ createstu, setCreatestu }) => {
-  const { id } = useParams() as {
-    id: number | string;
-  };
+const Create: React.FC<Createprops> = ({ createstu, setCreatestu, id }) => {
+  console.log(id);
   const isAddMode = !id;
   const [students, setStudents] = React.useState<Createstudent[]>([]);
   const [isPending, setpending] = React.useState<boolean>(false);
   console.log(isAddMode);
-  const history = useHistory();
 
   const validationSchema = yup.object().shape({
     name: yup
@@ -89,7 +85,6 @@ const Create: React.FC<Createprops> = ({ createstu, setCreatestu }) => {
         );
 
         update();
-        history.push("/");
       });
   };
 
@@ -110,7 +105,6 @@ const Create: React.FC<Createprops> = ({ createstu, setCreatestu }) => {
         setCreatestu((prev: Createstudent[]) => [...prev, data]);
 
         console.log("new student added");
-        history.push("/");
       });
   };
   React.useEffect(() => {
@@ -133,7 +127,7 @@ const Create: React.FC<Createprops> = ({ createstu, setCreatestu }) => {
   return (
     <div className="Create">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h1>{isAddMode ? "Add Student" : "Edit Student"}</h1>
+        {/* <h1>{isAddMode ? "Add Student" : "Edit Student"}</h1> */}
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input
@@ -248,8 +242,25 @@ const Create: React.FC<Createprops> = ({ createstu, setCreatestu }) => {
             <div className="invalid-feedback">{errors.groups?.message}</div>
           </div>
         </div>
-        <Button variant="contained" color="primary" size="small" type="submit">
-          {isAddMode ? <p>Submit</p> : <p>Save</p>}
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          type="submit"
+          sx={{ padding: "5px", marginRight: "20px" }}
+        >
+          {isAddMode ? "Submit" : "Save"}
+        </Button>
+
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          type="reset"
+          sx={{ padding: "5px" }}
+          onClick={() => reset()}
+        >
+          Reset
         </Button>
       </form>
     </div>
