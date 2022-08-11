@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Container from "@mui/material/Container";
 import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@mui/material";
+import type { Student } from "./components/ComponentTypes";
 import "./App.css";
 import useFetch from "./CustomHook/useFetch";
 import Body from "./components/Body";
 import CustomizedDialogs from "./components/Popup";
 import Create from "./AddEditForm/Create";
-import type { Student } from "./components/ComponentTypes";
-import { Paper } from "@mui/material";
 
 export interface Dialogtype {
   handleClickOpens: () => void;
@@ -52,7 +52,9 @@ function App() {
         <Container className={classes.App}>
           <Switch>
             <Container>
-              <h1>Student Administration Framework</h1>
+              <Typography variant="h4">
+                Student Administration Framework
+              </Typography>
 
               <Route exact path="/">
                 <Body
