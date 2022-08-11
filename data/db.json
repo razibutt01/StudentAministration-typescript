@@ -8,6 +8,7 @@
       "groups": [
         "Maths",
         "Chemistry",
+        "Physics",
         "Computer"
       ],
       "id": 2
@@ -24,9 +25,9 @@
     },
     {
       "name": "dsdfds",
-      "sex": "Female",
-      "Date_of_Birth": "2022-07-11",
       "Place_of_Birth": "dfdsf",
+      "Date_of_Birth": "2022-07-11",
+      "sex": "Female",
       "groups": [
         "Chemistry",
         "Computer"
@@ -58,9 +59,9 @@
     },
     {
       "name": "ghgjghj",
-      "sex": "Female",
-      "Date_of_Birth": "2022-07-08",
       "Place_of_Birth": "hgjghj",
+      "Date_of_Birth": "2022-07-08",
+      "sex": "Male",
       "groups": [
         "Maths",
         "Chemistry",

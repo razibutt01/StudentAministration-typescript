@@ -1,38 +1,82 @@
+import React from "react";
+import { Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Container, Paper } from "@mui/material";
+import type { Student } from "./ComponentTypes";
+import type { Bodytype } from "./ComponentTypes";
+import useFetch from "../CustomHook/useFetch";
 import Side from "./SideBar";
 import Tables from "./Tables";
 import Top from "./TopBar";
 
-import useFetch from "../CustomHook/useFetch";
-import React from "react";
-interface Student {
-  name: string;
-  sex: string;
-  Date_of_Birth: string;
-  Place_of_Birth: string;
-  groups: string[];
-  id: number;
-}
-type Bodytype = {
-  handleClickOpens: () => void;
-  getId: (id: number) => void;
-  handleID: () => void;
-};
-const Body: React.FC<Bodytype> = ({ handleClickOpens, getId, handleID }) => {
+const UseStyles = makeStyles({
+  Body: {
+    border: "1px solid #dddddd",
+    width: "100%",
+    margin: "0",
+    boxSizing: "border-box",
+    maxWidth: "sm",
+    minHeight: "560px",
+    "@media screen and (max-width:940px)": {
+      maxWidth: "940px",
+    },
+  },
+  BodyContent: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    width: "100%",
+    boxSizing: "border-box",
+    margin: "0",
+    marginTop: "70px",
+    "@media screen and (max-width:940px)": {
+      maxWidth: "940px",
+    },
+  },
+  Side: {
+    maxwidth: "250px",
+    marginTop: "50px",
+    "@media screen and (max-width:845px)": {
+      maxWidth: "845px",
+      marginTop: "0",
+      margin: "10px auto",
+    },
+  },
+  Table: {
+    boxSizing: "border-box",
+    maxWidth: "750px",
+    display: "inline-block",
+    width: "100%",
+    "@media screen and (max-width:1100px)": {
+      maxWidth: "650px",
+    },
+    "@media screen and (max-width:990px)": {
+      maxWidth: "600px",
+    },
+    "@media screen and (max-width:900px)": {
+      maxWidth: "550px",
+    },
+    "@media screen and (max-width:845px)": {
+      maxWidth: "845px",
+    },
+  },
+});
+const Body = ({ handleClickOpens, getId, handleID }: Bodytype) => {
   const { data, isPending, error } = useFetch("http://localhost:5000/Students");
   const [students, setStudents] = React.useState<Student[]>([]);
-  const [searchterm, setTerm] = React.useState("");
+  const [searchTerm, setSearchTerm] = React.useState("");
   const [searchResults, setResults] = React.useState<Student[]>([]);
-  const [filtered, setFiltered] = React.useState<Student[]>([]);
-  const [fil, setFil] = React.useState<string[]>([]);
-
-  const searchHandler = (searchterm: string) => {
-    setTerm(searchterm);
-    if (searchterm !== "") {
+  const [filteredStudents, setFilteredStudents] = React.useState<Student[]>([]);
+  const [GroupArr, setGroupArr] = React.useState<string[]>([]);
+  const classes = UseStyles();
+  const searchHandler = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+    if (searchTerm !== "") {
       const newStudent = students.filter((student) => {
         return Object.values(student.name)
           .join("")
           .toLocaleLowerCase()
-          .includes(searchterm.toLocaleLowerCase());
+          .includes(searchTerm.toLocaleLowerCase());
       });
       setResults(newStudent);
     } else {
@@ -41,28 +85,28 @@ const Body: React.FC<Bodytype> = ({ handleClickOpens, getId, handleID }) => {
   };
 
   React.useEffect(() => {
-    const filteredStudents = students.filter((student) =>
+    const newFilteredStudents = students.filter((student) =>
       student.groups.find((group) => {
-        if (fil.includes(group)) {
+        if (GroupArr.includes(group)) {
           return true;
         }
         return false;
       })
     );
-    setFiltered(filteredStudents);
-  }, [fil]);
+    setFilteredStudents(newFilteredStudents);
+  }, [GroupArr]);
 
-  const handleFilter = (fill: string) => {
-    const current = fil.indexOf(fill);
-    const newfill = [...fil];
+  const handleFilter = (value: string) => {
+    const current = GroupArr.indexOf(value);
+    const newValue = [...GroupArr];
     if (current === -1) {
-      newfill.push(fill);
+      newValue.push(value);
     } else {
-      newfill.splice(current, 1);
+      newValue.splice(current, 1);
     }
-    setFil(newfill);
+    setGroupArr(newValue);
   };
-  console.log(fil);
+  console.log(GroupArr);
 
   React.useEffect(() => {
     if (data?.length) {
@@ -71,34 +115,34 @@ const Body: React.FC<Bodytype> = ({ handleClickOpens, getId, handleID }) => {
   }, [data]);
 
   return (
-    <div className="Body">
-      <div className="top">
+    <Container className={classes.Body} component={Paper} maxWidth="lg">
+      <Box className="top">
         {students && (
           <Top
             topstudents={students}
-            term={searchterm}
+            term={searchTerm}
             searchkeyword={searchHandler}
             handleClickOpen={handleClickOpens}
             handleID={handleID}
           />
         )}
-      </div>
-      <div className="Body-content">
-        <div className="Side">
-          {error && <div>{error}</div>}
-          {isPending && <div>Loading...</div>}
+      </Box>
+      <Box className={classes.BodyContent}>
+        <Box className={classes.Side}>
+          {error && <Box>{error}</Box>}
+          {isPending && <Box>Loading...</Box>}
           {students && <Side getfilter={(e: string) => handleFilter(e)} />}
-        </div>
-        <div className="Table">
-          {error && <div>{error}</div>}
-          {isPending && <div>Loading...</div>}
+        </Box>
+        <Box className={classes.Table}>
+          {error && <Box>{error}</Box>}
+          {isPending && <Box>Loading...</Box>}
 
           {students && (
             <Tables
               tablestu={
-                fil.length > 0
-                  ? filtered
-                  : searchterm.length < 1
+                GroupArr.length > 0
+                  ? filteredStudents
+                  : searchTerm.length < 1
                   ? students
                   : searchResults
               }
@@ -107,9 +151,9 @@ const Body: React.FC<Bodytype> = ({ handleClickOpens, getId, handleID }) => {
               handleClickOpens={handleClickOpens}
             />
           )}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

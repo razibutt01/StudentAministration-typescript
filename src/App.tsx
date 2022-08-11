@@ -1,23 +1,27 @@
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import Container from "@mui/material/Container";
+import { makeStyles } from "@material-ui/core/styles";
 import "./App.css";
 import useFetch from "./CustomHook/useFetch";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Body from "./components/Body";
 import CustomizedDialogs from "./components/Popup";
-import React from "react";
 import Create from "./AddEditForm/Create";
+import type { Student } from "./components/ComponentTypes";
+import { Paper } from "@mui/material";
 
-export interface Student {
-  name: string;
-  sex: string;
-  Date_of_Birth: string;
-  Place_of_Birth: string;
-  groups: string[];
-  id: number;
-}
 export interface Dialogtype {
   handleClickOpens: () => void;
 }
+const UseStyles = makeStyles({
+  App: {
+    textAlign: "center",
+    margin: "10px auto",
+  },
+});
 function App() {
+  const classes = UseStyles();
   const { data, isPending, error } = useFetch("http://localhost:5000/Students");
   const [appstudents, setAppstudents] = React.useState<Student[]>([]);
   const [id, getId] = React.useState<number>(0);
@@ -45,9 +49,9 @@ function App() {
   return (
     <AppContent.Provider value={{ handleClickOpens }}>
       <Router>
-        <div className="App">
+        <Container className={classes.App}>
           <Switch>
-            <div className="content">
+            <Container>
               <h1>Student Administration Framework</h1>
 
               <Route exact path="/">
@@ -74,9 +78,9 @@ function App() {
                   </CustomizedDialogs>
                 )}
               </Route>
-            </div>
+            </Container>
           </Switch>
-        </div>
+        </Container>
       </Router>
     </AppContent.Provider>
   );

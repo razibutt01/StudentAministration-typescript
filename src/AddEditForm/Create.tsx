@@ -1,29 +1,70 @@
-import { Button } from "@mui/material";
-import { useForm } from "react-hook-form";
-
 import React from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import type { Student } from "../App";
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import { FormLabel } from "@mui/material";
+import { makeStyles } from "@material-ui/core";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import type { CreateStudentProps } from "../components/ComponentTypes";
+import type { Createprops } from "../components/ComponentTypes";
+const UseStyles = makeStyles({
+  create: {
+    margin: 0,
+    padding: 0,
+  },
+  text: {
+    width: "100%",
+    marginBottom: "6px",
+  },
+  textname: {
+    width: "100%",
+    marginBottom: "5px",
+  },
+  date: {
+    marginTop: "10px",
+  },
+  box: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  groupBox: {
+    display: "flex",
+    flexDirection: "column",
+    marginLeft: "50px",
+  },
+  check: {
+    gap: "5px",
+  },
+  btn: {
+    marginTop: "10px",
+    marginLeft: "40px",
+  },
+  form: {
+    margin: "0",
+    padding: "0",
+  },
 
-interface Createstudent {
-  name: string;
-  sex: string;
-  Date_of_Birth: string;
-  Place_of_Birth: string;
-  groups: string[];
-  id: number;
-}
-type Createprops = {
-  createstu: Createstudent[];
-  setCreatestu: React.Dispatch<React.SetStateAction<Student[]>>;
-  id: number;
-};
-
-const Create: React.FC<Createprops> = ({ createstu, setCreatestu, id }) => {
+  invalidFeedback: {
+    color: "red",
+    fontSize: "small",
+    marginTop: "0",
+    textAlign: "center",
+  },
+  invalidFeedbackForSex: {
+    color: "red",
+    fontSize: "small",
+    marginTop: "0",
+  },
+});
+const Create = ({ createstu, setCreatestu, id }: Createprops) => {
+  const classes = UseStyles();
   console.log(id);
   const isAddMode = !id;
-  const [students, setStudents] = React.useState<Createstudent[]>([]);
+  const [students, setStudents] = React.useState<CreateStudentProps[]>([]);
   const [isPending, setpending] = React.useState<boolean>(false);
   console.log(isAddMode);
 
@@ -47,13 +88,14 @@ const Create: React.FC<Createprops> = ({ createstu, setCreatestu, id }) => {
       .max(4, "maximum 4 fields can be chosen")
       .required("Groups are required"),
   });
-  const validationOpt = { resolver: yupResolver(validationSchema) };
 
   const { register, handleSubmit, reset, setValue, getValues, formState } =
-    useForm<Createstudent>(validationOpt);
+    useForm<CreateStudentProps>({
+      resolver: yupResolver(validationSchema),
+    });
   const { errors } = formState;
   console.log(errors);
-  function onSubmit(data: Createstudent) {
+  function onSubmit(data: CreateStudentProps) {
     return isAddMode ? createStudent(data) : updatestudent(id, data);
   }
   const update = () => {
@@ -65,7 +107,7 @@ const Create: React.FC<Createprops> = ({ createstu, setCreatestu, id }) => {
   };
   const updatestudent = (
     id: number | string,
-    updatedstudent: Createstudent
+    updatedstudent: CreateStudentProps
   ) => {
     fetch(`http://localhost:5000/Students/` + id, {
       method: "PUT",
@@ -88,7 +130,7 @@ const Create: React.FC<Createprops> = ({ createstu, setCreatestu, id }) => {
       });
   };
 
-  const createStudent = (data: Createstudent) => {
+  const createStudent = (data: CreateStudentProps) => {
     setpending(true);
     fetch("http://localhost:5000/Students", {
       method: "POST",
@@ -102,7 +144,7 @@ const Create: React.FC<Createprops> = ({ createstu, setCreatestu, id }) => {
       })
 
       .then((data) => {
-        setCreatestu((prev: Createstudent[]) => [...prev, data]);
+        setCreatestu((prev: CreateStudentProps[]) => [...prev, data]);
 
         console.log("new student added");
       });
@@ -123,147 +165,201 @@ const Create: React.FC<Createprops> = ({ createstu, setCreatestu, id }) => {
         });
     }
   }, []);
-  console.log(students);
+  console.log("getValues", getValues());
   return (
-    <div className="Create">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <h1>{isAddMode ? "Add Student" : "Edit Student"}</h1> */}
-        <div className="form-group">
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            className={`form-control ${errors.name ? "is-invalid" : ""}`}
-            id="name"
-            {...register("name")}
-          />
-          <div className="invalid-feedback">{errors.name?.message}</div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="Place_of_Birth">Place of Birth:</label>
-          <input
-            type="text"
-            className={`form-control ${
-              errors.Place_of_Birth ? "is-invalid" : ""
-            }`}
-            id="Place_of_Birth"
-            {...register("Place_of_Birth")}
-          />
-          <div className="invalid-feedback">
-            {errors.Place_of_Birth?.message}
-          </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="Date_of_Birth">Date of Birth:</label>
-          <input
-            type="date"
-            className={`form-control ${
-              errors.Date_of_Birth ? "is-invalid" : ""
-            }`}
-            id="Date_of_Birth"
-            {...register("Date_of_Birth")}
-          />
-          <div className="invalid-feedback">
-            {errors.Date_of_Birth?.message}
-          </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="sex">Sex:</label>
-          <div>
-            <div className="form-check form-check-inline">
-              <input
-                className={`form-check-input ${
-                  errors.sex?.message ? "is-invalid" : ""
-                }`}
-                type="radio"
-                id="male"
-                value="Male"
-                {...register("sex")}
+    <Box className={classes.create}>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+        <FormControl>
+          {/* <h1>{isAddMode ? "Add Student" : "Edit Student"}</h1> */}
+          <Box className={classes.textname}>
+            <TextField
+              fullWidth
+              label="Name"
+              type="text"
+              placeholder="Enter the Name"
+              variant="outlined"
+              // className={classes.textname}
+              // className={`form-control ${errors.name ? "is-invalid" : ""}`}
+              id="name"
+              {...register("name")}
+              defaultValue={!isAddMode ? { getValues } : ""}
+            />
+            <Box className={classes.invalidFeedback}>
+              {errors.name?.message}
+            </Box>
+          </Box>
+          <Box className="form-group">
+            <TextField
+              label="Place of Birth"
+              type="text"
+              placeholder="Enter the Country"
+              className={classes.text}
+              id="Place_of_Birth"
+              {...register("Place_of_Birth")}
+              defaultValue={!isAddMode ? { getValues } : ""}
+            />
+            <Box className={classes.invalidFeedback}>
+              {errors.Place_of_Birth?.message}
+            </Box>
+          </Box>
+          <Box className={classes.box}>
+            <FormLabel htmlFor="Date_of_Birth">Date of Birth:</FormLabel>
+            <TextField
+              // FormLabel="Date of Birth"
+              type="date"
+              placeholder="Enter your Date of Birth"
+              className={classes.date}
+              id="Date_of_Birth"
+              {...register("Date_of_Birth")}
+              defaultValue={!isAddMode ? { getValues } : ""}
+            />
+            <Box className={classes.invalidFeedback}>
+              {errors.Date_of_Birth?.message}
+            </Box>
+          </Box>
+
+          <Box className="form-group">
+            <FormLabel>Sex:</FormLabel>
+            <Box sx={{ marginLeft: "50px" }}>
+              <Box className="form-check form-check-inline">
+                <FormControlLabel
+                  label="Male"
+                  className={classes.check}
+                  control={
+                    <TextField
+                      type="radio"
+                      value="Male"
+                      {...register("sex")}
+                      defaultValue={!isAddMode ? { getValues } : ""}
+                      variant="filled"
+                    />
+                  }
+                />
+              </Box>
+              <Box className="form-check form-check-inline">
+                <FormControlLabel
+                  label="Female"
+                  className={classes.check}
+                  control={
+                    <TextField
+                      type="radio"
+                      value="Female"
+                      {...register("sex")}
+                      defaultValue={!isAddMode ? { getValues } : ""}
+                      variant="filled"
+                    />
+                  }
+                />
+              </Box>
+              <Box className={classes.invalidFeedbackForSex}>
+                {errors.sex?.message}
+              </Box>
+            </Box>
+          </Box>
+          <Box>
+            <FormLabel>Groups:</FormLabel>
+            <Box className={classes.groupBox}>
+              <FormControlLabel
+                label="Maths"
+                className={classes.check}
+                control={
+                  <TextField
+                    type="checkbox"
+                    value="Maths"
+                    {...register("groups")}
+                    defaultValue={!isAddMode ? { getValues } : ""}
+                    variant="filled"
+                  />
+                }
               />
-              <label className="form-check-label" htmlFor="male">
-                Male
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                id="female"
-                value="Female"
-                {...register("sex")}
+
+              <FormControlLabel
+                label="Chemistry"
+                className={classes.check}
+                control={
+                  <TextField
+                    type="checkbox"
+                    value="Chemistry"
+                    sx={{ gap: "5px" }}
+                    {...register("groups")}
+                    defaultValue={!isAddMode ? { getValues } : ""}
+                    variant="filled"
+                  />
+                }
               />
-              <label className="form-check-label" htmlFor="female">
-                Female
-              </label>
-            </div>
-            <div className="invalid-feedback">{errors.sex?.message}</div>
-          </div>
+              <FormControlLabel
+                label="Physics"
+                className={classes.check}
+                control={
+                  <TextField
+                    type="checkbox"
+                    value="Physics"
+                    sx={{ gap: "5px" }}
+                    {...register("groups")}
+                    defaultValue={!isAddMode ? { getValues } : ""}
+                    variant="filled"
+                  />
+                }
+              />
+              <FormControlLabel
+                label="Computer"
+                className={classes.check}
+                control={
+                  <TextField
+                    type="checkbox"
+                    value="Computer"
+                    sx={{ gap: "5px" }}
+                    {...register("groups")}
+                    defaultValue={!isAddMode ? { getValues } : ""}
+                    variant="filled"
+                  />
+                }
+              />
 
-          <div>
-            <label>Groups:</label>
-            <div className="fields">
-              <label>
-                <input type="checkbox" value="Maths" {...register("groups")} />
-                Maths
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  value="Chemistry"
-                  {...register("groups")}
-                />
-                Chemistry
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  value="Physics"
-                  {...register("groups")}
-                />
-                Physics
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  value="Computer"
-                  {...register("groups")}
-                />
-                Computer
-              </label>
+              <FormControlLabel
+                label="Biology"
+                className={classes.check}
+                control={
+                  <TextField
+                    type="checkbox"
+                    value="Biology"
+                    sx={{ gap: "5px" }}
+                    {...register("groups")}
+                    defaultValue={!isAddMode ? { getValues } : ""}
+                    variant="filled"
+                  />
+                }
+              />
+            </Box>
+            <Box className={classes.invalidFeedback}>
+              {errors.groups?.message}
+            </Box>
+          </Box>
+          <Box className={classes.btn}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              type="submit"
+              sx={{ padding: "5px", marginRight: "20px" }}
+            >
+              {isAddMode ? "Submit" : "Save"}
+            </Button>
 
-              <label>
-                <input
-                  type="checkbox"
-                  value="Biology"
-                  {...register("groups")}
-                />
-                Biology
-              </label>
-            </div>
-            <div className="invalid-feedback">{errors.groups?.message}</div>
-          </div>
-        </div>
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          type="submit"
-          sx={{ padding: "5px", marginRight: "20px" }}
-        >
-          {isAddMode ? "Submit" : "Save"}
-        </Button>
-
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          type="reset"
-          sx={{ padding: "5px" }}
-          onClick={() => reset()}
-        >
-          Reset
-        </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              type="reset"
+              sx={{ padding: "5px" }}
+              onClick={() => reset()}
+            >
+              Reset
+            </Button>
+          </Box>
+        </FormControl>
       </form>
-    </div>
+    </Box>
   );
 };
 

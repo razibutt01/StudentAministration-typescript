@@ -10,30 +10,32 @@ import {
   Table,
 } from "@mui/material";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-
-interface tableStudent {
-  name: string;
-  sex: string;
-  Date_of_Birth: string;
-  Place_of_Birth: string;
-  groups: string[];
-  id: number;
-}
-type Tableprops = {
-  tablestu: tableStudent[];
-  setTablestu(e: tableStudent[]): void;
-  handleClickOpens: () => void;
-  getId: (id: number) => void;
-};
-const Tables: React.FC<Tableprops> = ({
+import type { tableStudentProps } from "./ComponentTypes";
+import type { Tableprops } from "./ComponentTypes";
+import { makeStyles } from "@material-ui/core/styles";
+const UseStyles = makeStyles({
+  table: {
+    fontFamily: "arial, sans-serif",
+    borderCollapse: "collapse",
+    maxWidth: "750px",
+    width: "100%",
+    display: "inline-block",
+  },
+  td: {
+    borderBottom: "1px solid #dddddd",
+    textAlign: "left",
+    padding: "8px",
+  },
+});
+const Tables = ({
   tablestu,
   handleClickOpens,
   setTablestu,
   getId,
-}) => {
+}: Tableprops) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  const classes = UseStyles();
   const handleChangePage = (event: any, newPage: number) => {
     setPage(newPage);
   };
@@ -46,7 +48,7 @@ const Tables: React.FC<Tableprops> = ({
 
   const update = () => {
     fetch("http://localhost:5000/Students").then((result) => {
-      result.json().then((resp: tableStudent[]) => {
+      result.json().then((resp: tableStudentProps[]) => {
         setTablestu(resp);
       });
     });
@@ -65,10 +67,13 @@ const Tables: React.FC<Tableprops> = ({
 
   return (
     <div className="Table">
-      <TableContainer component={Paper} sx={{ maxHeight: "300px" }}>
-        <Table aria-label="simple table" stickyHeader>
+      <TableContainer
+        component={Paper}
+        sx={{ maxHeight: "300px", width: "100%" }}
+      >
+        <Table aria-label="simple table" stickyHeader className={classes.table}>
           <TableHead>
-            <TableRow>
+            <TableRow className={classes.td}>
               <TableCell sx={{ fontWeight: "bold" }}>Name</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Sex</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Place of Birth</TableCell>
@@ -82,7 +87,7 @@ const Tables: React.FC<Tableprops> = ({
               ? tablestu
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((student) => (
-                    <TableRow key={student.id}>
+                    <TableRow key={student.id} className={classes.td}>
                       <TableCell
                         onClick={() => handleStudent(student.id)}
                         sx={{ color: "blue", cursor: "pointer" }}

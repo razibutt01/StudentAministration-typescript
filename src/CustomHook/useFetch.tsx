@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
-interface Student {
-  name: string;
-  sex: string;
-  Date_of_Birth: string;
-  Place_of_Birth: string;
-  groups: string[];
-  id: number;
-}
+import type { Student } from "../components/ComponentTypes";
+
 const useFetch = (url: string) => {
   const [data, setData] = useState<Student[]>([]);
   const [isPending, setpending] = useState(true);
